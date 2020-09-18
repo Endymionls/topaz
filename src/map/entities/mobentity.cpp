@@ -284,6 +284,12 @@ bool CMobEntity::CanLink(position_t* pos, int16 superLink)
         return false;
     }
 
+    // Don't link I'm an underground antlion
+    if ((m_roamFlags & ROAMFLAG_AMBUSH) && IsNameHidden())
+    {
+        return false;
+    }
+
     // link only if I see him
     if (m_Detects & DETECT_SIGHT) {
 
@@ -294,6 +300,11 @@ bool CMobEntity::CanLink(position_t* pos, int16 superLink)
     }
 
     if (distance(loc.p, *pos) > getMobMod(MOBMOD_LINK_RADIUS))
+    {
+        return false;
+    }
+
+    if (getMobMod(MOBMOD_NO_LINK) > 0)
     {
         return false;
     }
@@ -611,6 +622,15 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
         }
         else
         {
+            if (this->objtype == TYPE_MOB && PTarget->objtype == TYPE_PC)
+            {
+                CBattleEntity* PCoverAbilityUser = battleutils::GetCoverAbilityUser(PTarget, this);
+                if (PCoverAbilityUser != nullptr)
+                {
+                    PTarget = PCoverAbilityUser;
+                }
+            }
+
             PAI->TargetFind->findSingleTarget(PTarget, findFlags);
         }
     }
@@ -918,7 +938,7 @@ void CMobEntity::DropItems(CCharEntity* PChar)
         // Wiki's have conflicting info on mob lv required for Geodes. One says 50 the other 75. I think 50 is correct.
 
         uint8 effect = 0; // Begin Adding Crystals
-        
+
         if (m_Element > 0)
         {
             uint8 regionID = PChar->loc.zone->GetRegionID();
