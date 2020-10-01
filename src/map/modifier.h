@@ -221,6 +221,7 @@ enum class Mod
     HASTE_GEAR                = 384, // Haste (and Slow) from equipment - 10000 base, 375 = 3.75%
     SPELLINTERRUPT            = 168, // % Spell Interruption Rate
     MOVE                      = 169, // % Movement Speed
+    MOUNT_MOVE                = 972, // % Mount Movement Speed
     FASTCAST                  = 170, // Increases Spell Cast Time (TRAIT)
     UFASTCAST                 = 407, // uncapped fast cast
     CURE_CAST_TIME            = 519, // cure cast time reduction
@@ -803,6 +804,8 @@ enum class Mod
     CONQUEST_BONUS            = 933, // Conquest points bonus granted (percentage)
     CONQUEST_REGION_BONUS     = 934, // Increases the influence points awarded to the player's nation when receiving conquest points
     CAMPAIGN_BONUS            = 935, // Increases the evaluation for allied forces by percentage
+
+    GARDENING_WILT_BONUS      = 936, // Increases the number of Vanadays a plant can survive before it wilts
 
     // The spares take care of finding the next ID to use so long as we don't forget to list IDs that have been freed up by refactoring.
     // 570 through 825 used by WS DMG mods these are not spares.
